@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+{% load html_tag %}
+{% load i18n %}
+
+{% block headerContent %}
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/home.css' %}" />
+	<script type="text/javascript" src="{% static 'assets/js/home.js' %}"></script>
+{% endblock headerContent %}
+
+{% block bodyContent %}
+<!-- //////////////////////////////// -->
+		<div class="wheel-start3">
+			<img src="{% static 'images/bg7.jpg' %}" alt="" class="wheel-img">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 padd-lr0">
+						<div class="wheel-start3-body clearfix marg-lg-t255 marg-lg-b75 marg-sm-t190 marg-xs-b30">
+							<h3>Register your agency</h3>
+							<ol class="breadcrumb">
+								<li><a href="#">Home</a></li>
+								<li><a href="#"> pages </a></li>
+								<li class="active">Checkout</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /////////////////////////////////// -->
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 padd-lr0">
+					<div class="wheel-billing">
+						<div class="wheel-header marg-lg-t140 marg-lg-b50 marg-sm-t100">
+							<h5>Register your agency</h5>
+						</div>
+						<form id="form_registration" action="{% url 'agences_register' %}" method="post">
+							{% csrf_token %}
+							<label class="question top_question" for="RESULT_TextField-1">Company Details :&nbsp;<b class="icon_required" style="color:#F00">*</b></label>
+							{{ form_reg.errors.agency_name }}
+							<input type="text" name="agency_name" value="{{ form_reg.data.agency_name }}" placeholder="{% translate 'Company Name' %}" required {% if form_reg.errors.agency_name %} class="input-error-text"{% endif %}>
+							{{ form_reg.errors.tax_number }}
+							<input type="text" name="tax_number" value="{{ form_reg.data.tax_number }}" placeholder="{% translate 'TAX Number' %}" required {% if form_reg.errors.tax_number %} class="input-error-text"{% endif %}>
+							<div class=""><input type="file" placeholder="Company Logo (Optional)" size="25" class="file_upload" accept=".jpg,.jpeg,.gif,.png"><br><div class="file_upload_files"></div><div class="file_upload_info"></div></div>
+							<input type="text" placeholder="Company Name (Optional) ">
+							{{ form_reg.errors.adress_agency }}
+							<input type="text" name="adress_agency" value="{{ form_reg.data.adress_agency }}" placeholder="{% translate 'Buisness Adress' %}" required {% if form_reg.errors.adress_agency %} class="input-error-text"{% endif %}>
+							<input type="text" placeholder="Localisation">
+							{{ form_reg.errors.governorate }}
+							<select class="selectpicker ">
+								<option>State / County</option>
+								<option>Lviv</option>
+								<option>Kiev</option>
+							</select>
+							{{ form_reg.errors.city }}
+							<input type="text" name="city" value="{{ form_reg.data.city }}" placeholder="{% translate 'City' %}" required {% if form_reg.errors.governorate %} class="input-error-text"{% endif %}>
+							<input type="text" placeholder="ZIP / Postcode" class="wheel-half-width pull-left">
+
+							<label class="question top_question" for="RESULT_TextField-1">Contact Details :&nbsp;<b class="icon_required" style="color:#F00">*</b></label>
+							<input type="text" placeholder="First Name " class="wheel-half-width pull-left">
+							<input type="text" placeholder="Last Name  " class="wheel-half-width pull-right marg-r0">
+							<input type="text" placeholder="Email Address ">
+							{{ form_reg.errors.phone_number }}
+							<input type="text" name="phone_number" value="{{ form_reg.data.phone_number }}" placeholder="{% translate 'Phone number' %}" required {% if form_reg.errors.phone_number %} class="input-error-text"{% endif %}>
+							<label for="input-val8">
+							<input type="text" placeholder="Password " class="wheel-half-width pull-left">
+							<input type="text" placeholder="Confirm Password" class="wheel-half-width pull-right marg-r0">
+						</form>
+					</div>
+				</div>
+				<div class="col-md-6 padd-lr0">
+					<div class="wheel-order marg-lg-t150 marg-lg-b150 marg-sm-b100 marg-sm-t100">
+						<div class="wheel-payment marg-lg-t60 marg-lg-b30">
+							<div class="wheel-header ">
+								<h5>Confirmation Terms and Conditions</h5>
+							</div>
+							<form action="#">
+								<input type="radio" id='r1' name='payment'>
+								<label for="r1"><i></i>
+								<span>Regle 1</span>
+								</label>
+								<p>Sed non mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit  </p>
+								<input type="radio" id='r2' name='payment'>
+								<label for="r2"><i></i>
+								<span>Regle 2</span>
+								</label>
+								<input type="radio" id='r3' name='payment'>
+								<label for="r3"><i></i>
+								<span>Regle 3</span>
+								</label>
+								<label for="input-val10" class="wheel-agree">
+								<input type="checkbox" id='input-val10'>
+								<span>I agree with the</span>
+								<a href=""> Terms and Conditions</a>
+								</label>
+								<button>Confirm registration</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- /////////////////////////////// -->
+{% endblock bodyContent %}

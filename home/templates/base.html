@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% load static %}
+{% load html_tag %}
+{% translate "Tunisian Rent Car" as title %}
+{% translate "The first tunisian rent car website" as description %}
+{% get_available_languages as LANGUAGES %}
+{% get_current_language as current_language %}
+{% get_language_info_list for LANGUAGES as languages %}
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="">
+		<meta name="description" content="{% block description %}{{ description }}{% endblock description %}">
+		<meta name="keywords" content="{% block keywords %}{% translate 'tunisia, tunisian, car, rent, rental' %}{% endblock keywords %}">
+		<title>{% block title %}{{ title }}{% endblock title %}</title>
+		<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+		<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+		<!-- Scripts project -->
+		<script type="text/javascript" src="{% static 'assets/js/jquery-2.2.4.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+		<!-- count -->
+		<script type="text/javascript" src="{% static 'assets/js/jquery.countTo.js' %}"></script>
+		<!-- google maps - - >
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt5tJTim4lOO3ojbGARhPd1Z3O3CnE-C8" type="text/javascript"></script>
+		-->
+		<!-- swiper -->
+		<script type="text/javascript" src="{% static 'assets/js/idangerous.swiper.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/js/equalHeightsPlugin.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/js/jquery.datetimepicker.full.min.js' %}"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script type="text/javascript" src="{% static 'assets/js/bootstrap-select.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/js/index.js' %}"></script>
+		<script type="text/javascript" src="{% static 'assets/js/common.js' %}"></script>
+		<!-- sixth block end -->
+		<!-- reset css -->
+		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/css_reset.css' %}">
+		<!-- bootstrap -->
+		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.datetimepicker.min.css' %}">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="{% static 'assets/css/bootstrap-select.min.css' %}">
+		<!-- preload -->
+		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/loaders.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/index.css' %}">
+		<!--[if lt IE 9]>
+		<script src="{% static 'assets/js/html5shiv.min.js' %}"></script>
+		<script src="{% static 'assets/js/respond.min.js' %}"></script>
+		<![endif]-->
+		{% block headerContent %}{% endblock headerContent %}
+	</head>
+	<body class="{% block classBody %}{% endblock classBody %}">
+		<!-- Messages -->
+		{% if messages %}
+			<div>
+				{% for message in messages %}
+					<div style="border-radius: 0;" {% if message.tags %} class="alert alert-icon alert-{{ message.tags }} alert-dismissible fade show mb-0" role="alert" {% endif %}>
+						{{ message }}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+		<!-- End Messages -->
+		<!-- MAIN -->
+		<div class="load-wrap">
+			<div class="wheel-load">
+				<img src="{% static 'images/loader.gif' %}" alt="" class="image">
+			</div>
+		</div>
+		<div class="wheel-menu-wrap ">
+			<div class="container-fluid wheel-bg1">
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="wheel-logo">
+							<a href="index.html"><img src="{% static 'images/logo.png' %}" alt=""></a>
+						</div>
+					</div>
+					<div class="col-sm-9 col-xs-12 padd-lr0">
+						<div class="wheel-top-menu clearfix">
+							<div class="wheel-top-menu-info">
+								<div class="top-menu-item"><a href="callto:+21670707070"><i class="fa fa-phone"></i><span>(+216) 70 707 707</span></a></div>
+								<div class="top-menu-item"><a href="tuncar@tuncar.com"><i class="fa fa-envelope"></i><span>tuncar@tuncar.com</span></a></div>
+							</div>
+							<div class="wheel-top-menu-log">
+								<div class="top-menu-item">
+									<div class="dropdown wheel-user-ico">
+										<button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										{% if user.is_authenticated %}
+											{{ user.get_full_name }}
+										{% else %}
+											{% translate "Account" %}
+										{% endif %}
+										<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											{% if user.is_authenticated %}
+												<li><a href="{% url 'login' %}">{% translate "Profile" %}</a></li>
+												<li><a href="{% url 'password_change' %}">{% translate "Change Password" %}</a></li>
+												<li><a href="{% url 'logout' %}">{% translate "Log Out" %}</a></li>
+											{% else %}
+												<li><a href="{% url 'login' %}">{% translate "Login" %}</a></li>
+												<li><a href="{% url 'registration' %}">{% translate "Register" %}</a></li>
+											{% endif %}
+										</ul>
+									</div>
+								</div>
+
+ 								<div class="top-menu-item">
+									<div class="dropdown wheel-lang-ico">
+										<button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										{{ current_language|title }}
+										<span class="caret"></span>
+										</button>
+											<ul class="dropdown-menu">
+												{% for language in languages %}
+													<li><a href="#" onclick="change_language('{{ language.code }}')">{{ language.name_local }} ({{ language.code }})</a></li>
+												{% endfor %}
+											</ul>
+										<form id="language_form_id" action="{% url 'set_language' %}" method="post">
+											{% csrf_token %}
+											<input id="language_form_id_next" name="next" type="hidden" value="">
+											<input id="language_form_id_language" name="language" type="hidden" value="">
+										</form>
+									</div>
+								</div>
+
+								<div class="top-menu-item">
+									<div class="dropdown">
+										<button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										{{ devise.name }}
+										<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											{% for devise_item in devises %}
+												<li><a href="#" onclick="change_devise('{{ devise_item.name }}')">{{ devise_item.name }}</a></li>
+											{% endfor %}
+										</ul>
+										<form id="devise_form_id" action="{% url 'set_devise' %}" method="post">
+											{% csrf_token %}
+											<input id="devise_id" name="devise" type="hidden" value="">
+											<input id="next_devise_id" name="next" type="hidden" value="">
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-9 ">
+						<div class="wheel-navigation">
+							<nav id="dl-menu">
+								<!-- class="dl-menu" -->
+								<ul class="main-menu dl-menu">
+									<li class="menu-item   current-menu-parent menu-item-has-children   active-color ">
+										<a href="#">Home</a>
+										<ul class="sub-menu dl-submenu">
+											<li class="menu-item current-menu-item">
+												<a href="index.html">Home page 01</a>
+											</li>
+											<li class="menu-item current-menu-item">
+												<a href="index2.html">Home page 02</a>
+											</li>
+										</ul>
+									</li>
+									<li class="menu-item current-menu-parent menu-item-has-children  ">
+										<a href="#"> Listing </a>
+										<!--class=" dl-submenu "-->
+										<ul class="sub-menu dl-submenu">
+											<li class="menu-item current-menu-item">
+												<a href="car-list-grid.html">Car Listing - Grid View</a>
+											</li>
+											<li class="menu-item current-menu-item">
+												<a href="car-list-3col2.html">Car Listing - List View</a>
+											</li>
+											<li class="menu-item current-menu-item">
+												<a href="car-listing-details.html">car listing details</a>
+											</li>
+										</ul>
+									</li>
+									<li class="menu-item   ">
+										<a href="reservation1.html">Reservation</a>
+									</li>
+									<li class="menu-item menu-item-has-children">
+										<a href="#">Pages</a>
+										<ul class="sub-menu">
+											<li class="menu-item "><a href="{% url 'contact' %}">contact</a></li>
+											<li class="menu-item "><a href="{% url 'login' %}">Register</a></li>
+											<li class="menu-item "><a href="checkout.html">Ceckout</a></li>
+											<li class="menu-item "><a href="about.html">About</a></li>
+											<li class="menu-item "><a href="shopping.html">shopping cart</a></li>
+											<li class="menu-item menu-item-has-children">
+												<a href="#">Level 2</a>
+												<ul class="sub-menu">
+													<li class="menu-item"><a href="#">Level 3</a></li>
+													<li class="menu-item"><a href="#">Level 3</a></li>
+													<li class="menu-item"><a href="#">Level 3</a></li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+									<li class="menu-item menu-item-has-children  ">
+										<a href="#">News</a>
+										<ul class="sub-menu">
+											<li class="menu-item"><a href="news.html">News</a></li>
+											<li class="menu-item"><a href="news-details.html">News details</a></li>
+										</ul>
+									</li>
+								</ul>
+								<div class="nav-menu-icon"><i></i></div>
+							</nav>
+							{% if user.is_authenticated %}
+								<a href="agences.php" class="wheel-cheader-but">Registre your Agency</a>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% block bodyContent%}{% endblock bodyContent %}
+		<div class="wheel-subscribe wheel-bg2">
+			<div class="container ">
+				<div class="row">
+					<div class="col-md-6 padd-lr0">
+						<div class="wheel-header">
+							<h5>Newsletter Signup </h5>
+							<h3>Subscribe & get<span> 20% </span> Off</h3>
+						</div>
+					</div>
+					<div class="col-md-6 padd-lr0">
+						<form action="#">
+							<input type="text" placeholder="Your Email Adddress">
+							<button class="wheel-btn">Subscribe</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- FOOTER -->
+		<!-- ///////////////// -->
+		<footer class="wheel-footer">
+			<img src="{% static 'images/bg4.jpg' %}" alt="" class="wheel-img">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3  col-sm-6  padd-lr0">
+						<div class="wheel-address">
+							<div class="wheel-footer-logo"><a href=""><img src="{% static 'images/logo2.png' %}" alt=""></a></div>
+							<ul>
+								<li><span><i class="fa fa-map-marker"></i>121 King Street, Melbourne <br>
+									VIC 3000, Australia  </span>
+								</li>
+								<li><a href=""><span><i class="fa fa-phone"></i> +61 3 8376 6284</span></a></li>
+								<li><a href=""><span><i class="fa fa-envelope"></i>contact@wheel-rental.com</span></a></li>
+							</ul>
+							<div class="wheel-soc">
+								<a href="" class="fa fa-twitter"></a>
+								<a href="" class="fa fa-facebook"></a>
+								<a href="" class="fa fa-linkedin"></a>
+								<a href="" class="fa fa-instagram"></a>
+								<a href="" class="fa fa-share-alt"></a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6  padd-lr0">
+						<div class="wheel-footer-item">
+							<h3>Useful Links</h3>
+							<ul>
+								<li><a href="" class="">About us</a></li>
+								<li><a href="" class="">Customer Service</a></li>
+								<li><a href="{% url 'contact' %}" class="">Contact Us</a></li>
+								<li><a href="" class="">Safety Recall</a></li>
+								<li><a href="" class="">Privacy policy</a></li>
+								<li><a href="" class="">Site Map</a></li>
+								<li><a href="" class="">Terms & condition</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-2 col-sm-6  padd-lr0">
+						<div class="wheel-footer-item ">
+							<h3>Vehicles</h3>
+							<ul>
+								<li><a href="" class="">Exotic Cars</a></li>
+								<li><a href="" class="">SUVs</a></li>
+								<li><a href="" class="">Trucks</a></li>
+								<li><a href="" class="">Mini Vans</a></li>
+								<li><a href="" class="">Moving Trucks</a></li>
+								<li><a href="" class="">Vans</a></li>
+								<li><a href="" class="">RVs</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-6 padd-lr0">
+						<div class="wheel-footer-gallery">
+							<h3>Photo Gallery</h3>
+							<div class="  clearfix">
+								<div class="wheel-footer-galery-item"><a href=""><img src="{% static 'images/i11.jpg' %}" alt=""></a></div>
+								<div class="wheel-footer-galery-item"><a href=""><img src="{% static 'images/i12.jpg' %}" alt=""></a></div>
+								<div class="wheel-footer-galery-item"><a href=""><img src="{% static 'images/i13.jpg' %}" alt=""></a></div>
+								<div class="wheel-footer-galery-item"><a href=""><img src="{% static 'images/i14.jpg' %}" alt=""></a></div>
+								<div class="wheel-footer-galery-item"><a href=""><img src="{% static 'images/i15.jpg' %}" alt=""></a></div>
+								<div class="wheel-footer-galery-item"><a href=""><img src="{% static 'images/i16.jpg' %}" alt=""></a></div>
+								<div class="wheel-footer-galery-item"><a href=""><img src="{% static 'images/i17.jpg' %}" alt=""></a></div>
+								<div class="wheel-footer-galery-item"><a href=""><img src="{% static 'images/i18.jpg' %}" alt=""></a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<div class="wheel-footer-info wheel-bg6">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-sm-6  padd-lr0"><span>&#169; Tunicar </span></div>
+					<div class="col-lg-4 col-sm-6 padd-lr0">
+						<ul>
+							<li><a href="">Home</a></li>
+							<li><a href=""> Pages</a></li>
+							<li><a href="">Location</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

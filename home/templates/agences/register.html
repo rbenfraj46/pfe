@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% load html_tag %}
+{% load i18n %}
+
+{% block headerContent %}
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/home.css' %}" />
+    <script type="text/javascript" src="{% static 'assets/js/home.js' %}"></script>
+{% endblock headerContent %}
+
+{% block bodyContent %}
+<div class="wheel-start3" style='background-image: url("/static/images/bg7.jpg");'>
+    <img src="{% static 'images/bg7.jpg' %}" alt="" class="wheel-img" style="display:none">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 padd-lr0">
+                <div class="wheel-start3-body clearfix marg-lg-t255 marg-lg-b75 marg-sm-t190 marg-xs-b30">
+                    <h3>{{ action_name }}</h3>
+                    <ol class="breadcrumb">
+                        <li><a href="#">{% translate "Home" %}</a></li>
+                        <li><a href="#">{% translate "Pages" %}</a></li>
+                        <li class="active">{% translate "Register" %}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wheel-register-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 padd-r0">
+                <div class="wheel-register-sign marg-lg-t150 marg-lg-b150 marg-sm-t100 marg-sm-b100">
+                    <div class="wheel-header">
+                        <h5>{% translate "Sign up Now" %}</h5>
+                        <h3>
+                            {% translate "Get" %} <span>{% translate "Registered" %}</span>
+                        </h3>
+                    </div>
+                    <form id="form_registration" action="{% url 'registration' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <input type="text" name="agency_name" placeholder="{% translate 'Agency Name' %}" required>
+                        <input type="text" name="ceo_name" placeholder="{% translate 'CEO Name' %}" required>
+                        <input type="text" name="tax_number" placeholder="{% translate 'Tax Registration Number' %}" required>
+                        <input type="text" name="adress_agency" placeholder="{% translate 'Address' %}" required>
+                        <input type="text" name="governorate" placeholder="{% translate 'Governorate' %}" required>
+                        <input type="text" name="city" placeholder="{% translate 'City' %}" required>
+                        <input type="email" name="email" placeholder="{% translate 'Email Address' %}" required>
+                        <input type="text" name="phone_number" placeholder="{% translate 'Phone Number' %}" required>
+                        <label>{% translate "Upload Agency Image" %}</label>
+                        <input type="file" name="agency_image" accept="image/*" required>
+                        
+                        <div class="wheel-accept-terms">
+                            <input type="checkbox" id="accept_term" name="accept_term" required>
+                            <label for="accept_term">
+                                {% translate "I accept the Terms and Conditions" %}
+                            </label>
+                        </div>
+                        <button class="wheel-btn" type="submit">{% translate "Sign Up" %}</button>
+                    </form>
+                    <div class="wheel-register-link">
+                        <a href="#" class="wheel-btn-link wheel-bg11">{% translate "Register With Facebook" %}</a>
+                        <a href="#" class="wheel-btn-link wheel-bg12">{% translate "Register With Twitter" %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock bodyContent %}
