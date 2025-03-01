@@ -11,7 +11,7 @@ from home.models import Agences
 User = get_user_model()
 
 
-class AgencesForm(forms.Form):
+class AgencesForm(forms.ModelForm):
     accept_term = BooleanField(required=True, label=_('Accept Terms'))
 
     class Meta:
@@ -25,11 +25,10 @@ class AgencesForm(forms.Form):
             field.error_messages = {'required': _('The field ') + field.label + _(' is required')}
 
     def save(self, commit=True):
-        agences = super().save(commit)
-        agences.creator = self.request.user
+        agences = super().save(commit=False)
         agences.is_mail_verified = False
         agences.is_active = False
         if commit:
             agences.save()
-        return  agences
+        return agences
 

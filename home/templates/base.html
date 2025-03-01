@@ -213,7 +213,11 @@
 								<div class="nav-menu-icon"><i></i></div>
 							</nav>
 							{% if user.is_authenticated %}
-								<a href="agences.php" class="wheel-cheader-but">Registre your Agency</a>
+								{% if user.agences_set.exists %}
+									<a href="agences/manage" class="wheel-cheader-but">{% translate "Manage your Agency" %}</a>
+								{% else %}
+									<a href="agences.php" class="wheel-cheader-but">{% translate "Register your Agency" %}</a>
+								{% endif %}
 							{% endif %}
 						</div>
 					</div>

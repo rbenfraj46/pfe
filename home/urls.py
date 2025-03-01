@@ -26,4 +26,5 @@ urlpatterns = [
     path('contact.php', contact.ContactView.as_view(),name='contact'),
     re_path(r'^agences.php$', agences.AgencesView.as_view(), name='agences'),
     re_path(r'^agences/register$', agences.RegisterView.as_view(), name='agences_register'),
+    re_path(r'^agences/manage$', agences.ManageAgenceView.as_view(), name='manage_agence'),
 ]

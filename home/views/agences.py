@@ -23,9 +23,31 @@ class RegisterView(AgencesView):
         return context
 
     def post(self, request, *args, **kwargs):
-        form = AgencesForm(request.POST)
+        form = AgencesForm(request.POST, request.FILES)
         if form.is_valid():
+            agence = form.save(commit=False)
+            agence.creator = request.user
+            agence.save()
             messages.success(request, _('Agence created Successfully. Please check your mail box and hit the mail verification.'))
             return redirect(reverse('index'))
         else:
             return render(request, 'agences/register.html', {'form_reg': form, 'action_name': _('Register')}, status=200)
+
+
+class ManageAgenceView(AgencesView):
+    template_name = "agences/manage.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['agence'] = self.request.user.agences_set.first()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        agence = self.request.user.agences_set.first()
+        form = AgencesForm(request.POST, request.FILES, instance=agence)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Agence updated Successfully.'))
+            return redirect(reverse('manage_agence'))
+        else:
+            return render(request, 'agences/manage.html', {'form': form, 'action_name': _('Manage')}, status=200)
